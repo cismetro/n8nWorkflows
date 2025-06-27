@@ -1,0 +1,2360 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apostila n8n: Automação de Workflows</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#EA4B71',
+                        secondary: '#FF6D5A',
+                        n8nPurple: '#7B68EE',
+                        dark: {
+                            bg: '#181818',
+                            card: '#2a2a2a',
+                            text: '#ffffff'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-white dark:bg-dark-bg text-gray-900 dark:text-dark-text transition-colors duration-300">
+    <div class="min-h-screen">
+        <!-- Header -->
+        <header class="bg-gradient-to-r from-primary to-secondary text-white py-6 shadow-lg">
+            <div class="container mx-auto px-4">
+                <h1 class="text-4xl font-bold text-center">
+                    <i class="fas fa-project-diagram mr-3"></i>
+                    Apostila n8n: Automação Total
+                </h1>
+                <p class="text-center mt-2 text-pink-100">Workflows • Automação • Integrações • APIs • Produtividade</p>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="bg-gray-100 dark:bg-dark-card border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-wrap gap-2 py-3 overflow-x-auto">
+                    <button onclick="showSection('intro')" class="nav-btn px-4 py-2 rounded-lg bg-primary text-white">
+                        <i class="fas fa-home mr-2"></i>Introdução
+                    </button>
+                    <button onclick="showSection('concepts')" class="nav-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600">
+                        <i class="fas fa-cube mr-2"></i>Conceitos
+                    </button>
+                    <button onclick="showSection('basic-workflows')" class="nav-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600">
+                        <i class="fas fa-play mr-2"></i>Workflows Básicos
+                    </button>
+                    <button onclick="showSection('integrations')" class="nav-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600">
+                        <i class="fas fa-link mr-2"></i>Integrações
+                    </button>
+                    <button onclick="showSection('advanced')" class="nav-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600">
+                        <i class="fas fa-rocket mr-2"></i>Avançado
+                    </button>
+                    <button onclick="showSection('business')" class="nav-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600">
+                        <i class="fas fa-building mr-2"></i>Empresarial
+                    </button>
+                    <button onclick="showSection('production')" class="nav-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600">
+                        <i class="fas fa-server mr-2"></i>Produção
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="container mx-auto px-4 py-8">
+            <!-- Introdução -->
+            <section id="intro" class="section">
+                <div class="bg-gradient-to-r from-primary to-n8nPurple text-white rounded-lg p-8 mb-8">
+                    <h2 class="text-3xl font-bold mb-4">
+                        <i class="fas fa-magic mr-3"></i>Bem-vindo ao Mundo do n8n!
+                    </h2>
+                    <p class="text-lg mb-4">O n8n é uma ferramenta poderosa de automação de workflows que conecta suas aplicações e automatiza processos complexos.</p>
+                    <div class="grid md:grid-cols-3 gap-4 mt-6">
+                        <div class="bg-white bg-opacity-20 rounded-lg p-4">
+                            <i class="fas fa-code text-2xl mb-2"></i>
+                            <h3 class="font-bold">Código Aberto</h3>
+                            <p class="text-sm">Open source, self-hosted e extensível</p>
+                        </div>
+                        <div class="bg-white bg-opacity-20 rounded-lg p-4">
+                            <i class="fas fa-puzzle-piece text-2xl mb-2"></i>
+                            <h3 class="font-bold">300+ Integrações</h3>
+                            <p class="text-sm">Conecte qualquer aplicação ou serviço</p>
+                        </div>
+                        <div class="bg-white bg-opacity-20 rounded-lg p-4">
+                            <i class="fas fa-mouse-pointer text-2xl mb-2"></i>
+                            <h3 class="font-bold">Interface Visual</h3>
+                            <p class="text-sm">Editor drag-and-drop intuitivo</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                    <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg p-6">
+                        <h3 class="text-xl font-bold mb-4 text-primary">
+                            <i class="fas fa-lightbulb mr-2"></i>O que é o n8n?
+                        </h3>
+                        <ul class="space-y-3 text-gray-700 dark:text-gray-300">
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>Ferramenta de automação de workflows</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>Editor visual com nós conectáveis</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>Triggers automáticos e manuais</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>Processamento de dados em tempo real</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>Execução local ou em nuvem</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg p-6">
+                        <h3 class="text-xl font-bold mb-4 text-primary">
+                            <i class="fas fa-star mr-2"></i>Por que usar o n8n?
+                        </h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center">
+                                <div class="w-12 h-8 bg-green-500 rounded mr-3 flex items-center justify-center">
+                                    <i class="fas fa-dollar-sign text-white text-sm"></i>
+                                </div>
+                                <div>
+                                    <div class="font-semibold">Gratuito</div>
+                                    <div class="text-sm text-gray-600 dark:text-gray-400">Open source sem limitações</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-12 h-8 bg-blue-500 rounded mr-3 flex items-center justify-center">
+                                    <i class="fas fa-shield-alt text-white text-sm"></i>
+                                </div>
+                                <div>
+                                    <div class="font-semibold">Self-hosted</div>
+                                    <div class="text-sm text-gray-600 dark:text-gray-400">Seus dados ficam seguros</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-12 h-8 bg-purple-500 rounded mr-3 flex items-center justify-center">
+                                    <i class="fas fa-cogs text-white text-sm"></i>
+                                </div>
+                                <div>
+                                    <div class="font-semibold">Flexível</div>
+                                    <div class="text-sm text-gray-600 dark:text-gray-400">Personalização total</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg p-6 mb-8">
+                    <h3 class="text-xl font-bold mb-4">Instalação Rápida</h3>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+                            <h4 class="font-bold text-primary mb-2">
+                                <i class="fab fa-docker mr-2"></i>Docker
+                            </h4>
+                            <pre class="bg-gray-800 text-green-400 p-3 rounded text-sm"><code>docker run -it --rm \
+  --name n8n \
+  -p 5678:5678 \
+  -v ~/.n8n:/home/node/.n8n \
+  n8nio/n8n</code></pre>
+                        </div>
+                        
+                        <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+                            <h4 class="font-bold text-primary mb-2">
+                                <i class="fab fa-npm mr-2"></i>NPM
+                            </h4>
+                            <pre class="bg-gray-800 text-green-400 p-3 rounded text-sm"><code>npm install n8n -g
+n8n start</code></pre>
+                        </div>
+                        
+                        <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+                            <h4 class="font-bold text-primary mb-2">
+                                <i class="fas fa-download mr-2"></i>Binário
+                            </h4>
+                            <pre class="bg-gray-800 text-green-400 p-3 rounded text-sm"><code># Download do GitHub
+# Executar diretamente
+./n8n</code></pre>
+                        </div>
+                    </div>
+                    <div class="mt-4 p-4 bg-blue-50 dark:bg-blue-900 border-l-4 border-blue-400 rounded">
+                        <p class="text-blue-800 dark:text-blue-200">
+                            <i class="fas fa-info-circle mr-2"></i>
+                            <strong>Acesso:</strong> Após a instalação, acesse http://localhost:5678 para começar!
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-yellow-50 dark:bg-yellow-900 border-l-4 border-yellow-400 p-6 rounded-lg">
+                    <h3 class="text-lg font-semibold text-yellow-800 dark:text-yellow-200 mb-2">
+                        <i class="fas fa-rocket mr-2"></i>Casos de Uso Populares
+                    </h3>
+                    <div class="grid md:grid-cols-2 gap-4 text-yellow-700 dark:text-yellow-300">
+                        <div>
+                            <i class="fas fa-envelope mr-2"></i>Automação de email marketing<br>
+                            <i class="fas fa-database mr-2"></i>Sincronização de dados<br>
+                            <i class="fas fa-social-network mr-2"></i>Posts automáticos em redes sociais<br>
+                            <i class="fas fa-chart-bar mr-2"></i>Relatórios automáticos<br>
+                            <i class="fas fa-shopping-cart mr-2"></i>Processamento de pedidos
+                        </div>
+                        <div>
+                            <i class="fas fa-bell mr-2"></i>Sistema de notificações<br>
+                            <i class="fas fa-cloud-download-alt mr-2"></i>Backup automático<br>
+                            <i class="fas fa-users mr-2"></i>Gestão de leads<br>
+                            <i class="fas fa-calendar mr-2"></i>Agendamento de tarefas<br>
+                            <i class="fas fa-file-alt mr-2"></i>Geração de documentos
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Conceitos -->
+            <section id="concepts" class="section hidden">
+                <h2 class="text-3xl font-bold mb-6 text-primary">
+                    <i class="fas fa-cube mr-3"></i>Conceitos Fundamentais
+                </h2>
+
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                    <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg p-6">
+                        <h3 class="text-xl font-bold mb-4 text-primary">
+                            <i class="fas fa-sitemap mr-2"></i>Workflows
+                        </h3>
+                        <p class="text-gray-700 dark:text-gray-300 mb-4">
+                            Um workflow é uma sequência de nós conectados que processam dados automaticamente.
+                        </p>
+                        <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="bg-green-500 text-white px-2 py-1 rounded text-sm">Trigger</span>
+                                <i class="fas fa-arrow-right text-gray-400"></i>
+                                <span class="bg-blue-500 text-white px-2 py-1 rounded text-sm">Process</span>
+                                <i class="fas fa-arrow-right text-gray-400"></i>
+                                <span class="bg-purple-500 text-white px-2 py-1 rounded text-sm">Action</span>
+                            </div>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">
+                                Exemplo: Webhook → Processar dados → Enviar email
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg p-6">
+                        <h3 class="text-xl font-bold mb-4 text-primary">
+                            <i class="fas fa-puzzle-piece mr-2"></i>Nós (Nodes)
+                        </h3>
+                        <p class="text-gray-700 dark:text-gray-300 mb-4">
+                            Cada nó representa uma ação específica ou integração com um serviço.
+                        </p>
+                        <div class="space-y-2">
+                            <div class="flex items-center">
+                                <span class="w-3 h-3 bg-green-500 rounded-full mr-2"></span>
+                                <span class="text-sm"><strong>Trigger Nodes:</strong> Iniciam workflows</span>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="w-3 h-3 bg-blue-500 rounded-full mr-2"></span>
+                                <span class="text-sm"><strong>Action Nodes:</strong> Executam ações</span>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="w-3 h-3 bg-purple-500 rounded-full mr-2"></span>
+                                <span class="text-sm"><strong>Logic Nodes:</strong> Controlam fluxo</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg p-6 mb-8">
+                    <h3 class="text-xl font-bold mb-4">Simulador Visual de Workflow</h3>
+                    <div class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-8 text-center bg-gray-50 dark:bg-gray-800">
+                        <div id="workflow-simulator" class="space-y-6">
+                            <!-- Workflow visual será renderizado aqui -->
+                        </div>
+                        <div class="mt-6 flex justify-center space-x-4">
+                            <button onclick="runWorkflowDemo()" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors">
+                                <i class="fas fa-play mr-2"></i>Executar Demo
+                            </button>
+                            <button onclick="resetWorkflowDemo()" class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors">
+                                <i class="fas fa-redo mr-2"></i>Reset
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg p-6 mb-8">
+                    <h3 class="text-xl font-bold mb-4">Tipos de Triggers</h3>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+                            <h4 class="font-bold text-green-600 mb-2">
+                                <i class="fas fa-clock mr-2"></i>Cron Trigger
+                            </h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                                Executa em horários específicos
+                            </p>
+                            <div class="bg-gray-100 dark:bg-gray-800 p-2 rounded text-xs">
+                                <code>0 9 * * 1-5</code><br>
+                                <span class="text-gray-500">Todo dia útil às 9h</span>
+                            </div>
+                        </div>
+
+                        <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+                            <h4 class="font-bold text-blue-600 mb-2">
+                                <i class="fas fa-globe mr-2"></i>Webhook
+                            </h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                                Ativado por requisições HTTP
+                            </p>
+                            <div class="bg-gray-100 dark:bg-gray-800 p-2 rounded text-xs">
+                                <code>POST /webhook/abc123</code><br>
+                                <span class="text-gray-500">URL única para cada workflow</span>
+                            </div>
+                        </div>
+
+                        <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+                            <h4 class="font-bold text-purple-600 mb-2">
+                                <i class="fas fa-envelope mr-2"></i>Email Trigger
+                            </h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                                Monitora emails recebidos
+                            </p>
+                            <div class="bg-gray-100 dark:bg-gray-800 p-2 rounded text-xs">
+                                <code>IMAP/POP3</code><br>
+                                <span class="text-gray-500">Verifica caixa de entrada</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold mb-4">Expressões e Dados</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold mb-3 text-primary">Expressões Básicas</h4>
+                            <div class="space-y-3">
+                                <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded">
+                                    <code class="text-sm">{{ $json.name }}</code>
+                                    <p class="text-xs text-gray-500 mt-1">Acessa propriedade do JSON</p>
+                                </div>
+                                <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded">
+                                    <code class="text-sm">{{ $now.format('YYYY-MM-DD') }}</code>
+                                    <p class="text-xs text-gray-500 mt-1">Data atual formatada</p>
+                                </div>
+                                <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded">
+                                    <code class="text-sm">{{ $('Node Name').first().json.data }}</code>
+                                    <p class="text-xs text-gray-500 mt-1">Dados de outro nó</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold mb-3 text-primary">Funções Úteis</h4>
+                            <div class="space-y-3">
+                                <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded">
+                                    <code class="text-sm">{{ $json.email.toLowerCase() }}</code>
+                                    <p class="text-xs text-gray-500 mt-1">Converter para minúsculas</p>
+                                </div>
+                                <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded">
+                                    <code class="text-sm">{{ Math.round($json.price * 1.1) }}</code>
+                                    <p class="text-xs text-gray-500 mt-1">Cálculos matemáticos</p>
+                                </div>
+                                <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded">
+                                    <code class="text-sm">{{ $json.items.length }}</code>
+                                    <p class="text-xs text-gray-500 mt-1">Tamanho de array</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Workflows Básicos -->
+            <section id="basic-workflows" class="section hidden">
+                <h2 class="text-3xl font-bold mb-6 text-primary">
+                    <i class="fas fa-play mr-3"></i>Workflows Básicos
+                </h2>
+
+                <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg p-6 mb-8">
+                    <h3 class="text-xl font-bold mb-4">1. Workflow de Backup Automático</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold mb-3">Estrutura do Workflow</h4>
+                            <div class="space-y-3">
+                                <div class="flex items-center p-3 bg-green-100 dark:bg-green-900 rounded-lg">
+                                    <i class="fas fa-clock text-green-600 mr-3"></i>
+                                    <div>
+                                        <div class="font-semibold">Cron Trigger</div>
+                                        <div class="text-sm text-gray-600 dark:text-gray-400">Todo dia às 2h da manhã</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-center">
+                                    <i class="fas fa-arrow-down text-gray-400"></i>
+                                </div>
+                                <div class="flex items-center p-3 bg-blue-100 dark:bg-blue-900 rounded-lg">
+                                    <i class="fas fa-database text-blue-600 mr-3"></i>
+                                    <div>
+                                        <div class="font-semibold">MySQL</div>
+                                        <div class="text-sm text-gray-600 dark:text-gray-400">Exportar dados</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-center">
+                                    <i class="fas fa-arrow-down text-gray-400"></i>
+                                </div>
+                                <div class="flex items-center p-3 bg-purple-100 dark:bg-purple-900 rounded-lg">
+                                    <i class="fas fa-cloud text-purple-600 mr-3"></i>
+                                    <div>
+                                        <div class="font-semibold">Google Drive</div>
+                                        <div class="text-sm text-gray-600 dark:text-gray-400">Salvar backup</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold mb-3">Configuração JSON</h4>
+                            <pre class="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto text-sm"><code>{
+  "nodes": [
+    {
+      "name": "Cron Trigger",
+      "type": "n8n-nodes-base.cron",
+      "parameters": {
+        "rule": {
+          "hour": 2,
+          "minute": 0
+        }
+      }
+    },
+    {
+      "name": "MySQL Backup",
+      "type": "n8n-nodes-base.mysql",
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM users",
+        "options": {
+          "largeNumbersOutput": "text"
+        }
+      }
+    },
+    {
+      "name": "Google Drive Upload",
+      "type": "n8n-nodes-base.googleDrive",
+      "parameters": {
+        "operation": "upload",
+        "name": "backup_{{ $now.format('YYYY-MM-DD') }}.json",
+        "driveId": "backup-folder",
+        "binaryData": true
+      }
+    }
+  ],
+  "connections": {
+    "Cron Trigger": {
+      "main": [[{"node": "MySQL Backup", "type": "main", "index": 0}]]
+    },
+    "MySQL Backup": {
+      "main": [[{"node": "Google Drive Upload", "type": "main", "index": 0}]]
+    }
+  }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg p-6 mb-8">
+                    <h3 class="text-xl font-bold mb-4">2. Monitor de Website com Notificações</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold mb-3">Fluxo do Workflow</h4>
+                            <div class="space-y-3">
+                                <div class="flex items-center p-3 bg-green-100 dark:bg-green-900 rounded-lg">
+                                    <i class="fas fa-clock text-green-600 mr-3"></i>
+                                    <div>
+                                        <div class="font-semibold">Intervalo (5 min)</div>
+                                        <div class="text-sm text-gray-600 dark:text-gray-400">Verificação regular</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center p-3 bg-blue-100 dark:bg-blue-900 rounded-lg">
+                                    <i class="fas fa-globe text-blue-600 mr-3"></i>
+                                    <div>
+                                        <div class="font-semibold">HTTP Request</div>
+                                        <div class="text-sm text-gray-600 dark:text-gray-400">Ping do website</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center p-3 bg-yellow-100 dark:bg-yellow-900 rounded-lg">
+                                    <i class="fas fa-code-branch text-yellow-600 mr-3"></i>
+                                    <div>
+                                        <div class="font-semibold">IF Node</div>
+                                        <div class="text-sm text-gray-600 dark:text-gray-400">Status code != 200?</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center p-3 bg-red-100 dark:bg-red-900 rounded-lg">
+                                    <i class="fas fa-exclamation-triangle text-red-600 mr-3"></i>
+                                    <div>
+                                        <div class="font-semibold">Slack Alert</div>
+                                        <div class="text-sm text-gray-600 dark:text-gray-400">Website offline!</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold mb-3">Código do Workflow</h4>
+                            <pre class="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto text-sm"><code>{
+  "nodes": [
+    {
+      "name": "Every 5 minutes",
+      "type": "n8n-nodes-base.interval",
+      "parameters": {
+        "interval": 5,
+        "unit": "minutes"
+      }
+    },
+    {
+      "name": "Check Website",
+      "type": "n8n-nodes-base.httpRequest",
+      "parameters": {
+        "url": "https://meusite.com",
+        "options": {
+          "timeout": 10000,
+          "followRedirect": false
+        }
+      }
+    },
+    {
+      "name": "Is Site Down?",
+      "type": "n8n-nodes-base.if",
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json.statusCode }}",
+              "operation": "notEqual",
+              "value2": 200
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Send Alert",
+      "type": "n8n-nodes-base.slack",
+      "parameters": {
+        "channel": "#alerts",
+        "text": "🚨 WEBSITE DOWN!\nURL: {{ $('Check Website').first().json.url }}\nStatus: {{ $('Check Website').first().json.statusCode }}\nTime: {{ $now.format('DD/MM/YYYY HH:mm:ss') }}"
+      }
+    }
+  ]
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg p-6 mb-8">
+                    <h3 class="text-xl font-bold mb-4">3. Processamento de Formulário Web</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold mb-3">Estrutura Completa</h4>
+                            <div class="space-y-3">
+                                <div class="flex items-center p-3 bg-green-100 dark:bg-green-900 rounded-lg">
+                                    <i class="fas fa-globe text-green-600 mr-3"></i>
+                                    <div>
+                                        <div class="font-semibold">Webhook</div>
+                                        <div class="text-sm text-gray-600 dark:text-gray-400">Recebe dados do formulário</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center p-3 bg-blue-100 dark:bg-blue-900 rounded-lg">
+                                    <i class="fas fa-check-circle text-blue-600 mr-3"></i>
+                                    <div>
+                                        <div class="font-semibold">Validação</div>
+                                        <div class="text-sm text-gray-600 dark:text-gray-400">Verifica campos obrigatórios</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center p-3 bg-purple-100 dark:bg-purple-900 rounded-lg">
+                                    <i class="fas fa-table text-purple-600 mr-3"></i>
+                                    <div>
+                                        <div class="font-semibold">Google Sheets</div>
+                                        <div class="text-sm text-gray-600 dark:text-gray-400">Salva dados</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center p-3 bg-orange-100 dark:bg-orange-900 rounded-lg">
+                                    <i class="fas fa-envelope text-orange-600 mr-3"></i>
+                                    <div>
+                                        <div class="font-semibold">Email Confirmação</div>
+                                        <div class="text-sm text-gray-600 dark:text-gray-400">Notifica usuário</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold mb-3">Configuração Detalhada</h4>
+                            <pre class="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto text-sm"><code>{
+  "name": "Form Processor",
+  "nodes": [
+    {
+      "name": "Form Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "contact-form",
+        "options": {
+          "rawBody": false
+        }
+      }
+    },
+    {
+      "name": "Validate Data",
+      "type": "n8n-nodes-base.function",
+      "parameters": {
+        "functionCode": "const data = items[0].json;\n\n// Validações\nconst errors = [];\n\nif (!data.name || data.name.length < 2) {\n  errors.push('Nome é obrigatório');\n}\n\nif (!data.email || !data.email.includes('@')) {\n  errors.push('Email inválido');\n}\n\nif (!data.message || data.message.length < 10) {\n  errors.push('Mensagem muito curta');\n}\n\nif (errors.length > 0) {\n  throw new Error('Validation failed: ' + errors.join(', '));\n}\n\n// Sanitização\ndata.name = data.name.trim();\ndata.email = data.email.toLowerCase().trim();\ndata.message = data.message.trim();\ndata.created_at = new Date().toISOString();\n\nreturn [{ json: data }];"
+      }
+    },
+    {
+      "name": "Save to Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "parameters": {
+        "operation": "append",
+        "sheetId": "1ABC123DEF456...",
+        "range": "A:E",
+        "options": {
+          "valueInputOption": "USER_ENTERED"
+        },
+        "values": [
+          [
+            "={{ $json.name }}",
+            "={{ $json.email }}",
+            "={{ $json.message }}",
+            "={{ $json.created_at }}",
+            "pending"
+          ]
+        ]
+      }
+    },
+    {
+      "name": "Send Confirmation",
+      "type": "n8n-nodes-base.emailSend",
+      "parameters": {
+        "fromEmail": "noreply@empresa.com",
+        "toEmail": "={{ $json.email }}",
+        "subject": "Confirmação - Recebemos sua mensagem",
+        "text": "Olá {{ $json.name }},\n\nRecebemos sua mensagem e entraremos em contato em breve.\n\nObrigado!"
+      }
+    }
+  ]
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold mb-4">4. Workflow Interativo - Teste Agora!</h3>
+                    <div class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold mb-3">Simule um Formulário</h4>
+                                <div class="space-y-3">
+                                    <input 
+                                        type="text" 
+                                        id="demo-name" 
+                                        placeholder="Seu nome" 
+                                        class="w-full text-base px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white"
+                                    >
+                                    <input 
+                                        type="email" 
+                                        id="demo-email" 
+                                        placeholder="Seu email" 
+                                        class="w-full text-base px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white"
+                                    >
+                                    <textarea 
+                                        id="demo-message" 
+                                        placeholder="Sua mensagem" 
+                                        rows="3"
+                                        class="w-full text-base px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white"
+                                    ></textarea>
+                                    <button 
+                                        onclick="simulateFormSubmission()" 
+                                        class="w-full bg-primary text-white py-2 rounded-lg hover:bg-red-600 transition-colors"
+                                    >
+                                        <i class="fas fa-paper-plane mr-2"></i>Enviar (Simular)
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-semibold mb-3">Log do Workflow</h4>
+                                <div id="workflow-log" class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg h-48 overflow-y-auto text-sm">
+                                    <div class="text-gray-500">Aguardando dados...</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Integrações -->
+            <section id="integrations" class="section hidden">
+                <h2 class="text-3xl font-bold mb-6 text-primary">
+                    <i class="fas fa-link mr-3"></i>Integrações Populares
+                </h2>
+
+                <div class="bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg p-6 mb-8">
+                    <h3 class="text-xl font-bold mb-2">
+                        <i class="fas fa-puzzle-piece mr-2"></i>300+ Integrações Disponíveis
+                    </h3>
+                    <p class="mb-4">Conecte n8n com praticamente qualquer serviço que você usa!</p>
+                    <div class="grid md:grid-cols-4 gap-4">
+                        <div class="bg-white bg-opacity-20 rounded-lg p-3 text-center">
+                            <i class="fab fa-google text-2xl mb-1"></i>
+                            <div class="text-sm">Google Workspace</div>
+                        </div>
+                        <div class="bg-white bg-opacity-20 rounded-lg p-3 text-center">
+                            <i class="fab fa-microsoft text-2xl mb-1"></i>
+                            <div class="text-sm">Microsoft 365</div>
+                        </div>
+                        <div class="bg-white bg-opacity-20 rounded-lg p-3 text-center">
+                            <i class="fab fa-slack text-2xl mb-1"></i>
+                            <div class="text-sm">Slack</div>
+                        </div>
+                        <div class="bg-white bg-opacity-20 rounded-lg p-3 text-center">
+                            <i class="fas fa-shopping-cart text-2xl mb-1"></i>
+                            <div class="text-sm">E-commerce</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8 mb-8">
+                    <!-- Google Workspace -->
+                    <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg p-6">
+                        <h3 class="text-xl font-bold mb-4 text-primary">
+                            <i class="fab fa-google mr-2"></i>Google Workspace
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="border-l-4 border-blue-500 pl-4">
+                                <h4 class="font-semibold">Gmail Automation</h4>
+                                <pre class="bg-gray-100 dark:bg-gray-800 p-2 rounded text-xs mt-2"><code>{
+  "name": "Gmail Auto-Reply",
+  "trigger": "Gmail - New Email",
+  "conditions": {
+    "subject": "contains 'urgent'",
+    "from": "not internal domain"
+  },
+  "actions": [
+    "Parse email content",
+    "Generate AI response",
+    "Send reply with template"
+  ]
+}</code></pre>
+                            </div>
+                            
+                            <div class="border-l-4 border-green-500 pl-4">
+                                <h4 class="font-semibold">Google Sheets Integration</h4>
+                                <pre class="bg-gray-100 dark:bg-gray-800 p-2 rounded text-xs mt-2"><code>{
+  "operations": [
+    "Read rows",
+    "Append data", 
+    "Update cells",
+    "Create sheets",
+    "Format data"
+  ],
+  "use_cases": [
+    "CRM data sync",
+    "Report generation",
+    "Form responses",
+    "Inventory tracking"
+  ]
+}</code></pre>
+                            </div>
+                            
+                            <div class="border-l-4 border-yellow-500 pl-4">
+                                <h4 class="font-semibold">Google Drive Files</h4>
+                                <pre class="bg-gray-100 dark:bg-gray-800 p-2 rounded text-xs mt-2"><code>{
+  "file_operations": [
+    "Upload files",
+    "Download content",
+    "Create folders", 
+    "Share permissions",
+    "Backup automation"
+  ]
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slack & Teams -->
+                    <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg p-6">
+                        <h3 class="text-xl font-bold mb-4 text-primary">
+                            <i class="fab fa-slack mr-2"></i>Comunicação
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="border-l-4 border-purple-500 pl-4">
+                                <h4 class="font-semibold">Slack Bot Automation</h4>
+                                <pre class="bg-gray-100 dark:bg-gray-800 p-2 rounded text-xs mt-2"><code>{
+  "triggers": [
+    "Slash commands",
+    "Message reactions", 
+    "Channel mentions",
+    "Direct messages"
+  ],
+  "responses": [
+    "Send formatted messages",
+    "Create threads",
+    "Update statuses",
+    "Schedule reminders"
+  ]
+}</code></pre>
+                            </div>
+                            
+                            <div class="border-l-4 border-blue-500 pl-4">
+                                <h4 class="font-semibold">Teams Integration</h4>
+                                <pre class="bg-gray-100 dark:bg-gray-800 p-2 rounded text-xs mt-2"><code>{
+  "features": [
+    "Post to channels",
+    "Send direct messages",
+    "Create meetings",
+    "Share files",
+    "Update calendar"
+  ]
+}</code></pre>
+                            </div>
+                            
+                            <div class="border-l-4 border-green-500 pl-4">
+                                <h4 class="font-semibold">Discord Bots</h4>
+                                <pre class="bg-gray-100 dark:bg-gray-800 p-2 rounded text-xs mt-2"><code>{
+  "bot_commands": [
+    "Server moderation",
+    "Welcome messages", 
+    "Role management",
+    "Automated responses",
+    "Game integrations"
+  ]
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- E-commerce & CRM -->
+                    <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg p-6">
+                        <h3 class="text-xl font-bold mb-4 text-primary">
+                            <i class="fas fa-shopping-cart mr-2"></i>E-commerce & CRM
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="border-l-4 border-red-500 pl-4">
+                                <h4 class="font-semibold">Shopify Automation</h4>
+                                <pre class="bg-gray-100 dark:bg-gray-800 p-2 rounded text-xs mt-2"><code>{
+  "events": [
+    "New orders",
+    "Product updates",
+    "Customer registration",
+    "Inventory changes"
+  ],
+  "actions": [
+    "Send order confirmations",
+    "Update inventory",
+    "Generate invoices",
+    "Track shipments"
+  ]
+}</code></pre>
+                            </div>
+                            
+                            <div class="border-l-4 border-orange-500 pl-4">
+                                <h4 class="font-semibold">HubSpot CRM</h4>
+                                <pre class="bg-gray-100 dark:bg-gray-800 p-2 rounded text-xs mt-2"><code>{
+  "crm_operations": [
+    "Create contacts",
+    "Update deals",
+    "Track activities", 
+    "Generate reports",
+    "Email sequences"
+  ]
+}</code></pre>
+                            </div>
+                            
+                            <div class="border-l-4 border-teal-500 pl-4">
+                                <h4 class="font-semibold">WooCommerce</h4>
+                                <pre class="bg-gray-100 dark:bg-gray-800 p-2 rounded text-xs mt-2"><code>{
+  "wordpress_integration": [
+    "Order processing",
+    "Customer data sync",
+    "Product management",
+    "Email marketing",
+    "Analytics tracking"
+  ]
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg p-6 mb-8">
+                    <h3 class="text-xl font-bold mb-4">Workflow: Sincronização Multi-Plataforma</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold mb-3">Cenário: Lead Management</h4>
+                            <p class="text-gray-600 dark:text-gray-400 mb-4">
+                                Quando um novo lead é capturado em um formulário web, automaticamente:
+                            </p>
+                            <div class="space-y-3">
+                                <div class="flex items-center p-3 bg-blue-100 dark:bg-blue-900 rounded-lg">
+                                    <span class="bg-blue-500 text-white px-2 py-1 rounded text-sm mr-3">1</span>
+                                    <span class="text-sm">Salva no HubSpot CRM</span>
+                                </div>
+                                <div class="flex items-center p-3 bg-green-100 dark:bg-green-900 rounded-lg">
+                                    <span class="bg-green-500 text-white px-2 py-1 rounded text-sm mr-3">2</span>
+                                    <span class="text-sm">Adiciona ao MailChimp</span>
+                                </div>
+                                <div class="flex items-center p-3 bg-purple-100 dark:bg-purple-900 rounded-lg">
+                                    <span class="bg-purple-500 text-white px-2 py-1 rounded text-sm mr-3">3</span>
+                                    <span class="text-sm">Notifica no Slack</span>
+                                </div>
+                                <div class="flex items-center p-3 bg-orange-100 dark:bg-orange-900 rounded-lg">
+                                    <span class="bg-orange-500 text-white px-2 py-1 rounded text-sm mr-3">4</span>
+                                    <span class="text-sm">Registra no Google Sheets</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold mb-3">Código do Workflow</h4>
+                            <pre class="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto text-sm"><code>{
+  "name": "Lead Sync Multi-Platform",
+  "nodes": [
+    {
+      "name": "Webhook Lead Capture",
+      "type": "n8n-nodes-base.webhook",
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "new-lead"
+      }
+    },
+    {
+      "name": "Process Lead Data",
+      "type": "n8n-nodes-base.function",
+      "parameters": {
+        "functionCode": "// Standardize lead data\nconst lead = items[0].json;\n\nconst standardizedLead = {\n  firstName: lead.first_name || lead.name?.split(' ')[0],\n  lastName: lead.last_name || lead.name?.split(' ').slice(1).join(' '),\n  email: lead.email?.toLowerCase(),\n  phone: lead.phone,\n  company: lead.company,\n  source: lead.utm_source || 'website',\n  createdAt: new Date().toISOString()\n};\n\nreturn [{ json: standardizedLead }];"
+      }
+    },
+    {
+      "name": "Save to HubSpot",
+      "type": "n8n-nodes-base.hubspot",
+      "parameters": {
+        "resource": "contact",
+        "operation": "create",
+        "properties": {
+          "firstname": "={{ $json.firstName }}",
+          "lastname": "={{ $json.lastName }}",
+          "email": "={{ $json.email }}",
+          "phone": "={{ $json.phone }}",
+          "company": "={{ $json.company }}"
+        }
+      }
+    },
+    {
+      "name": "Add to MailChimp",
+      "type": "n8n-nodes-base.mailchimp",
+      "parameters": {
+        "operation": "subscribe",
+        "list": "main-list",
+        "email": "={{ $json.email }}",
+        "mergeFields": {
+          "FNAME": "={{ $json.firstName }}",
+          "LNAME": "={{ $json.lastName }}"
+        }
+      }
+    },
+    {
+      "name": "Notify Slack",
+      "type": "n8n-nodes-base.slack",
+      "parameters": {
+        "channel": "#sales",
+        "text": "🎉 Novo Lead!\n👤 {{ $json.firstName }} {{ $json.lastName }}\n📧 {{ $json.email }}\n🏢 {{ $json.company }}\n🔗 Fonte: {{ $json.source }}"
+      }
+    },
+    {
+      "name": "Log to Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "parameters": {
+        "operation": "append",
+        "values": [
+          [
+            "={{ $json.firstName }}",
+            "={{ $json.lastName }}",
+            "={{ $json.email }}",
+            "={{ $json.phone }}",
+            "={{ $json.company }}",
+            "={{ $json.source }}",
+            "={{ $json.createdAt }}"
+          ]
+        ]
+      }
+    }
+  ]
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold mb-4">APIs e Webhooks Personalizados</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold mb-3">HTTP Request Node</h4>
+                            <p class="text-gray-600 dark:text-gray-400 mb-3">
+                                Para integrar com APIs que não têm nó específico:
+                            </p>
+                            <pre class="bg-gray-800 text-green-400 p-4 rounded-lg text-sm"><code>{
+  "name": "Custom API Call",
+  "type": "n8n-nodes-base.httpRequest",
+  "parameters": {
+    "method": "POST",
+    "url": "https://api.exemplo.com/webhook",
+    "authentication": "headerAuth",
+    "headerAuth": {
+      "name": "Authorization",
+      "value": "Bearer {{ $credentials.apiToken }}"
+    },
+    "body": {
+      "contentType": "json",
+      "jsonBody": {
+        "event": "user_registered",
+        "data": {
+          "user_id": "={{ $json.id }}",
+          "email": "={{ $json.email }}",
+          "timestamp": "={{ $now }}"
+        }
+      }
+    },
+    "options": {
+      "timeout": 30000,
+      "retry": {
+        "enabled": true,
+        "times": 3
+      }
+    }
+  }
+}</code></pre>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold mb-3">Webhook Security</h4>
+                            <p class="text-gray-600 dark:text-gray-400 mb-3">
+                                Configurações de segurança para webhooks:
+                            </p>
+                            <pre class="bg-gray-800 text-green-400 p-4 rounded-lg text-sm"><code>{
+  "webhook_security": {
+    "authentication": {
+      "method": "header",
+      "headerName": "X-API-Key",
+      "expectedValue": "{{ $credentials.webhookSecret }}"
+    },
+    "validation": {
+      "signature": {
+        "algorithm": "sha256",
+        "header": "X-Hub-Signature-256",
+        "secret": "{{ $credentials.webhookSecret }}"
+      }
+    },
+    "rate_limiting": {
+      "requests_per_minute": 60,
+      "burst": 10
+    },
+    "ip_whitelist": [
+      "192.168.1.0/24",
+      "10.0.0.0/8"
+    ]
+  }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Avançado -->
+            <section id="advanced" class="section hidden">
+                <h2 class="text-3xl font-bold mb-6 text-primary">
+                    <i class="fas fa-rocket mr-3"></i>Workflows Avançados
+                </h2>
+
+                <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg p-6 mb-8">
+                    <h3 class="text-xl font-bold mb-4">1. AI-Powered Content Generation</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold mb-3">Fluxo Inteligente</h4>
+                            <div class="space-y-3">
+                                <div class="flex items-center p-3 bg-green-100 dark:bg-green-900 rounded-lg">
+                                    <i class="fas fa-rss text-green-600 mr-3"></i>
+                                    <div>
+                                        <div class="font-semibold">RSS Monitor</div>
+                                        <div class="text-sm text-gray-600 dark:text-gray-400">Detecta novos artigos</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center p-3 bg-blue-100 dark:bg-blue-900 rounded-lg">
+                                    <i class="fas fa-robot text-blue-600 mr-3"></i>
+                                    <div>
+                                        <div class="font-semibold">OpenAI GPT</div>
+                                        <div class="text-sm text-gray-600 dark:text-gray-400">Gera resumo inteligente</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center p-3 bg-purple-100 dark:bg-purple-900 rounded-lg">
+                                    <i class="fas fa-image text-purple-600 mr-3"></i>
+                                    <div>
+                                        <div class="font-semibold">DALL-E</div>
+                                        <div class="text-sm text-gray-600 dark:text-gray-400">Cria imagem temática</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center p-3 bg-orange-100 dark:bg-orange-900 rounded-lg">
+                                    <i class="fab fa-twitter text-orange-600 mr-3"></i>
+                                    <div>
+                                        <div class="font-semibold">Social Media</div>
+                                        <div class="text-sm text-gray-600 dark:text-gray-400">Publica automaticamente</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold mb-3">Implementação com AI</h4>
+                            <pre class="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto text-sm"><code>{
+  "name": "AI Content Pipeline",
+  "nodes": [
+    {
+      "name": "RSS Feed Monitor",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "parameters": {
+        "url": "https://feeds.example.com/tech-news"
+      }
+    },
+    {
+      "name": "OpenAI Summarizer", 
+      "type": "n8n-nodes-base.openAi",
+      "parameters": {
+        "model": "gpt-4",
+        "prompt": "Resuma este artigo em 280 caracteres para Twitter, mantendo as informações mais importantes:\n\n{{ $json.content }}",
+        "maxTokens": 150,
+        "temperature": 0.7
+      }
+    },
+    {
+      "name": "Generate Image",
+      "type": "n8n-nodes-base.openAi",
+      "parameters": {
+        "model": "dall-e-3",
+        "prompt": "Create a modern, minimalist illustration representing: {{ $json.title }}",
+        "size": "1024x1024",
+        "quality": "standard"
+      }
+    },
+    {
+      "name": "Sentiment Analysis",
+      "type": "n8n-nodes-base.function",
+      "parameters": {
+        "functionCode": "// Análise de sentimento simples\nconst text = items[0].json.summary.toLowerCase();\n\nconst positiveWords = ['good', 'great', 'excellent', 'amazing', 'breakthrough'];\nconst negativeWords = ['bad', 'terrible', 'awful', 'disaster', 'crisis'];\n\nlet sentiment = 'neutral';\nlet score = 0;\n\npositiveWords.forEach(word => {\n  if (text.includes(word)) score += 1;\n});\n\nnegativeWords.forEach(word => {\n  if (text.includes(word)) score -= 1;\n});\n\nif (score > 0) sentiment = 'positive';\nif (score < 0) sentiment = 'negative';\n\nreturn [{\n  json: {\n    ...items[0].json,\n    sentiment: sentiment,\n    sentimentScore: score\n  }\n}];"
+      }
+    },
+    {
+      "name": "Post to Twitter",
+      "type": "n8n-nodes-base.twitter",
+      "parameters": {
+        "text": "{{ $('OpenAI Summarizer').first().json.choices[0].message.content }}\n\n#TechNews #AI",
+        "additionalFields": {
+          "media": "{{ $('Generate Image').first().json.data[0].url }}"
+        }
+      }
+    }
+  ]
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg p-6 mb-8">
+                    <h3 class="text-xl font-bold mb-4">2. Complex Data Processing Pipeline</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold mb-3">ETL Avançado</h4>
+                            <p class="text-gray-600 dark:text-gray-400 mb-3">
+                                Processa grandes volumes de dados com transformações complexas:
+                            </p>
+                            <div class="space-y-2">
+                                <div class="flex items-center text-sm">
+                                    <i class="fas fa-database text-blue-600 mr-2"></i>
+                                    <span>Extract: Múltiplas fontes</span>
+                                </div>
+                                <div class="flex items-center text-sm">
+                                    <i class="fas fa-cogs text-green-600 mr-2"></i>
+                                    <span>Transform: Limpeza e validação</span>
+                                </div>
+                                <div class="flex items-center text-sm">
+                                    <i class="fas fa-save text-purple-600 mr-2"></i>
+                                    <span>Load: Data warehouse</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold mb-3">Data Processing Function</h4>
+                            <pre class="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto text-sm"><code>{
+  "name": "Advanced Data Processor",
+  "type": "n8n-nodes-base.function",
+  "parameters": {
+    "functionCode": "// Processamento avançado de dados\nconst _ = require('lodash');\nconst moment = require('moment');\n\n// Dados de entrada\nconst rawData = items[0].json.records;\n\n// Validação e limpeza\nconst cleanData = rawData\n  .filter(record => {\n    // Remove registros inválidos\n    return record.email && \n           record.email.includes('@') &&\n           record.amount && \n           record.amount > 0;\n  })\n  .map(record => {\n    // Normalização\n    return {\n      id: record.id,\n      email: record.email.toLowerCase().trim(),\n      amount: parseFloat(record.amount),\n      currency: record.currency || 'USD',\n      date: moment(record.date).format('YYYY-MM-DD'),\n      category: record.category?.toLowerCase(),\n      // Campos calculados\n      quarter: moment(record.date).quarter(),\n      year: moment(record.date).year(),\n      month: moment(record.date).month() + 1\n    };\n  });\n\n// Agregações\nconst analytics = {\n  totalRecords: cleanData.length,\n  totalAmount: _.sumBy(cleanData, 'amount'),\n  avgAmount: _.meanBy(cleanData, 'amount'),\n  byCategory: _.groupBy(cleanData, 'category'),\n  byMonth: _.groupBy(cleanData, 'month'),\n  topCustomers: _.chain(cleanData)\n    .groupBy('email')\n    .map((orders, email) => ({\n      email,\n      totalAmount: _.sumBy(orders, 'amount'),\n      orderCount: orders.length\n    }))\n    .orderBy('totalAmount', 'desc')\n    .take(10)\n    .value()\n};\n\nreturn [\n  { json: { processedData: cleanData } },\n  { json: { analytics: analytics } }\n];"
+  }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg p-6 mb-8">
+                    <h3 class="text-xl font-bold mb-4">3. Error Handling & Retry Logic</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold mb-3">Estratégias de Recuperação</h4>
+                            <div class="space-y-3">
+                                <div class="border-l-4 border-red-500 pl-4">
+                                    <h5 class="font-semibold text-red-600">Try/Catch Global</h5>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                                        Captura erros em todo o workflow
+                                    </p>
+                                </div>
+                                <div class="border-l-4 border-yellow-500 pl-4">
+                                    <h5 class="font-semibold text-yellow-600">Retry com Backoff</h5>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                                        Tentativas com delay exponencial
+                                    </p>
+                                </div>
+                                <div class="border-l-4 border-blue-500 pl-4">
+                                    <h5 class="font-semibold text-blue-600">Dead Letter Queue</h5>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                                        Armazena falhas para análise
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold mb-3">Error Handler Implementation</h4>
+                            <pre class="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto text-sm"><code>{
+  "name": "Robust Error Handler",
+  "type": "n8n-nodes-base.function",
+  "parameters": {
+    "functionCode": "// Sistema robusto de tratamento de erros\nconst maxRetries = 3;\nconst baseDelay = 1000; // 1 segundo\n\nasync function executeWithRetry(operation, data, attempt = 1) {\n  try {\n    // Simula operação que pode falhar\n    const result = await operation(data);\n    return { success: true, data: result };\n    \n  } catch (error) {\n    console.error(`Attempt ${attempt} failed:`, error.message);\n    \n    if (attempt >= maxRetries) {\n      // Máximo de tentativas atingido\n      return {\n        success: false,\n        error: error.message,\n        attempts: attempt,\n        timestamp: new Date().toISOString(),\n        originalData: data\n      };\n    }\n    \n    // Calcula delay exponencial\n    const delay = baseDelay * Math.pow(2, attempt - 1);\n    console.log(`Retrying in ${delay}ms...`);\n    \n    // Aguarda antes da próxima tentativa\n    await new Promise(resolve => setTimeout(resolve, delay));\n    \n    // Recursão para nova tentativa\n    return executeWithRetry(operation, data, attempt + 1);\n  }\n}\n\n// Exemplo de uso\nconst apiCall = async (data) => {\n  // Simula chamada de API que pode falhar\n  if (Math.random() < 0.7) {\n    throw new Error('API temporarily unavailable');\n  }\n  return { processed: true, id: data.id };\n};\n\n// Processa cada item com retry\nconst results = [];\nfor (const item of items) {\n  const result = await executeWithRetry(apiCall, item.json);\n  results.push({ json: result });\n}\n\nreturn results;"
+  }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold mb-4">4. Workflow Orchestration & Subflows</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold mb-3">Master Workflow</h4>
+                            <p class="text-gray-600 dark:text-gray-400 mb-3">
+                                Orquestra múltiplos sub-workflows:
+                            </p>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex items-center">
+                                    <i class="fas fa-play text-green-600 mr-2"></i>
+                                    <span>Inicia processo principal</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-code-branch text-blue-600 mr-2"></i>
+                                    <span>Divide em sub-tarefas</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-sync text-purple-600 mr-2"></i>
+                                    <span>Executa em paralelo</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-check-circle text-green-600 mr-2"></i>
+                                    <span>Consolida resultados</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold mb-3">Orchestrator Code</h4>
+                            <pre class="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto text-sm"><code>{
+  "name": "Workflow Orchestrator",
+  "nodes": [
+    {
+      "name": "Master Trigger",
+      "type": "n8n-nodes-base.webhook"
+    },
+    {
+      "name": "Validate Input",
+      "type": "n8n-nodes-base.function",
+      "parameters": {
+        "functionCode": "// Valida e prepara dados\nconst input = items[0].json;\n\nif (!input.userId || !input.action) {\n  throw new Error('Missing required fields');\n}\n\n// Determina sub-workflows necessários\nconst workflows = [];\n\nif (input.action === 'user_onboarding') {\n  workflows.push(\n    'email_welcome_sequence',\n    'setup_user_preferences', \n    'create_user_dashboard',\n    'assign_default_permissions'\n  );\n}\n\nreturn [{\n  json: {\n    ...input,\n    workflows: workflows,\n    orchestrationId: Date.now().toString()\n  }\n}];"
+      }
+    },
+    {
+      "name": "Execute Sub-Workflows",
+      "type": "n8n-nodes-base.function", 
+      "parameters": {
+        "functionCode": "// Executa sub-workflows em paralelo\nconst data = items[0].json;\nconst results = [];\n\n// Simula execução de sub-workflows\nfor (const workflow of data.workflows) {\n  results.push({\n    workflow: workflow,\n    status: 'completed',\n    executionId: `exec_${Date.now()}_${Math.random()}`,\n    startTime: new Date().toISOString(),\n    duration: Math.random() * 5000 // ms\n  });\n}\n\nreturn [{\n  json: {\n    orchestrationId: data.orchestrationId,\n    userId: data.userId,\n    subWorkflows: results,\n    overallStatus: 'completed',\n    completedAt: new Date().toISOString()\n  }\n}];"
+      }
+    }
+  ]
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Business -->
+            <section id="business" class="section hidden">
+                <h2 class="text-3xl font-bold mb-6 text-primary">
+                    <i class="fas fa-building mr-3"></i>Automações Empresariais
+                </h2>
+
+                <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg p-6 mb-8">
+                    <h3 class="text-xl font-bold mb-4">1. Customer Onboarding Automation</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold mb-3">Jornada Completa do Cliente</h4>
+                            <div class="space-y-4">
+                                <div class="border-l-4 border-green-500 pl-4">
+                                    <h5 class="font-semibold">Dia 0 - Boas-vindas</h5>
+                                    <ul class="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                                        <li>• Email de boas-vindas personalizado</li>
+                                        <li>• Criação de conta nos sistemas</li>
+                                        <li>• Atribuição de representante</li>
+                                    </ul>
+                                </div>
+                                <div class="border-l-4 border-blue-500 pl-4">
+                                    <h5 class="font-semibold">Dia 1 - Setup</h5>
+                                    <ul class="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                                        <li>• Agendamento de call de onboarding</li>
+                                        <li>• Envio de guia de primeiros passos</li>
+                                        <li>• Acesso ao portal do cliente</li>
+                                    </ul>
+                                </div>
+                                <div class="border-l-4 border-purple-500 pl-4">
+                                    <h5 class="font-semibold">Dia 7 - Follow-up</h5>
+                                    <ul class="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                                        <li>• Pesquisa de satisfação</li>
+                                        <li>• Identificação de próximos passos</li>
+                                        <li>• Oferta de suporte adicional</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold mb-3">Workflow Implementation</h4>
+                            <pre class="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto text-sm"><code>{
+  "name": "Customer Onboarding",
+  "nodes": [
+    {
+      "name": "New Customer Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "parameters": {
+        "path": "new-customer"
+      }
+    },
+    {
+      "name": "Customer Data Enrichment",
+      "type": "n8n-nodes-base.function",
+      "parameters": {
+        "functionCode": "const customer = items[0].json;\n\n// Enriquece dados do cliente\nconst enrichedData = {\n  ...customer,\n  onboardingId: `OB_${Date.now()}`,\n  customerTier: customer.contractValue > 10000 ? 'Enterprise' : 'Standard',\n  assignedCSM: customer.contractValue > 50000 ? 'senior-csm' : 'standard-csm',\n  onboardingTrack: customer.industry === 'finance' ? 'compliance-focused' : 'standard',\n  timeZone: customer.timeZone || 'UTC',\n  language: customer.language || 'en'\n};\n\nreturn [{ json: enrichedData }];"
+      }
+    },
+    {
+      "name": "Create HubSpot Contact",
+      "type": "n8n-nodes-base.hubspot",
+      "parameters": {
+        "resource": "contact",
+        "operation": "create",
+        "properties": {
+          "email": "={{ $json.email }}",
+          "firstname": "={{ $json.firstName }}",
+          "lastname": "={{ $json.lastName }}",
+          "company": "={{ $json.company }}",
+          "phone": "={{ $json.phone }}",
+          "lifecyclestage": "customer",
+          "customer_tier": "={{ $json.customerTier }}",
+          "onboarding_id": "={{ $json.onboardingId }}"
+        }
+      }
+    },
+    {
+      "name": "Send Welcome Email",
+      "type": "n8n-nodes-base.emailSend",
+      "parameters": {
+        "fromEmail": "welcome@empresa.com",
+        "toEmail": "={{ $json.email }}",
+        "subject": "🎉 Bem-vindo à [Empresa], {{ $json.firstName }}!",
+        "htmlBody": "<!DOCTYPE html><html><body style='font-family: Arial, sans-serif;'><div style='max-width: 600px; margin: 0 auto; padding: 20px;'><h1 style='color: #333;'>Olá {{ $json.firstName }},</h1><p>Bem-vindo à nossa plataforma! Estamos muito animados para trabalhar com você.</p><div style='background: #f5f5f5; padding: 20px; border-radius: 5px; margin: 20px 0;'><h3>Seus próximos passos:</h3><ul><li>Acesse seu portal: <a href='https://portal.empresa.com'>portal.empresa.com</a></li><li>Agende sua call de onboarding</li><li>Explore nossos recursos</li></ul></div><p>Seu representante: {{ $json.assignedCSM }}</p><p>ID do Onboarding: {{ $json.onboardingId }}</p></div></body></html>"
+      }
+    },
+    {
+      "name": "Schedule Follow-ups",
+      "type": "n8n-nodes-base.function",
+      "parameters": {
+        "functionCode": "// Agenda follow-ups automáticos\nconst customer = items[0].json;\nconst followUps = [];\n\n// Day 1 follow-up\nfollowUps.push({\n  type: 'email',\n  scheduleFor: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),\n  template: 'day1_setup_guide',\n  customerId: customer.onboardingId\n});\n\n// Day 3 check-in call\nfollowUps.push({\n  type: 'calendar_invite',\n  scheduleFor: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(),\n  duration: 30,\n  subject: 'Onboarding Check-in Call',\n  customerId: customer.onboardingId\n});\n\n// Day 7 satisfaction survey\nfollowUps.push({\n  type: 'survey',\n  scheduleFor: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),\n  surveyId: 'onboarding_satisfaction',\n  customerId: customer.onboardingId\n});\n\nreturn followUps.map(followUp => ({ json: followUp }));"
+      }
+    },
+    {
+      "name": "Notify Sales Team",
+      "type": "n8n-nodes-base.slack",
+      "parameters": {
+        "channel": "#sales-notifications",
+        "text": "🎉 Novo cliente onboarded!\n👤 {{ $json.firstName }} {{ $json.lastName }}\n🏢 {{ $json.company }}\n💰 Tier: {{ $json.customerTier }}\n🆔 Onboarding ID: {{ $json.onboardingId }}\n👨‍💼 CSM: {{ $json.assignedCSM }}"
+      }
+    }
+  ]
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg p-6 mb-8">
+                    <h3 class="text-xl font-bold mb-4">2. Automated Invoice Processing</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold mb-3">Processo de Faturamento</h4>
+                            <div class="space-y-3">
+                                <div class="flex items-center p-3 bg-green-100 dark:bg-green-900 rounded-lg">
+                                    <i class="fas fa-file-invoice text-green-600 mr-3"></i>
+                                    <div>
+                                        <div class="font-semibold">Geração de Fatura</div>
+                                        <div class="text-sm text-gray-600 dark:text-gray-400">Baseada em contratos ativos</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center p-3 bg-blue-100 dark:bg-blue-900 rounded-lg">
+                                    <i class="fas fa-eye text-blue-600 mr-3"></i>
+                                    <div>
+                                        <div class="font-semibold">Revisão Automática</div>
+                                        <div class="text-sm text-gray-600 dark:text-gray-400">Validação de dados e valores</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center p-3 bg-purple-100 dark:bg-purple-900 rounded-lg">
+                                    <i class="fas fa-paper-plane text-purple-600 mr-3"></i>
+                                    <div>
+                                        <div class="font-semibold">Envio Automático</div>
+                                        <div class="text-sm text-gray-600 dark:text-gray-400">Email + portal do cliente</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center p-3 bg-orange-100 dark:bg-orange-900 rounded-lg">
+                                    <i class="fas fa-bell text-orange-600 mr-3"></i>
+                                    <div>
+                                        <div class="font-semibold">Follow-up</div>
+                                        <div class="text-sm text-gray-600 dark:text-gray-400">Lembretes de pagamento</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold mb-3">Billing Automation</h4>
+                            <pre class="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto text-sm"><code>{
+  "name": "Automated Billing",
+  "schedule": "0 9 1 * *", // 1st day of month at 9 AM
+  "nodes": [
+    {
+      "name": "Monthly Billing Trigger",
+      "type": "n8n-nodes-base.cron"
+    },
+    {
+      "name": "Get Active Contracts",
+      "type": "n8n-nodes-base.mysql",
+      "parameters": {
+        "query": "SELECT c.*, cu.email, cu.name, cu.billing_address FROM contracts c JOIN customers cu ON c.customer_id = cu.id WHERE c.status = 'active' AND c.billing_day <= DAY(NOW())"
+      }
+    },
+    {
+      "name": "Generate Invoice Data",
+      "type": "n8n-nodes-base.function",
+      "parameters": {
+        "functionCode": "const contracts = items[0].json;\nconst invoices = [];\n\nfor (const contract of contracts) {\n  // Calculate billing period\n  const today = new Date();\n  const billingStart = new Date(today.getFullYear(), today.getMonth(), 1);\n  const billingEnd = new Date(today.getFullYear(), today.getMonth() + 1, 0);\n  \n  // Calculate amount based on usage or fixed\n  let amount = contract.monthly_amount;\n  \n  if (contract.billing_type === 'usage') {\n    // Get usage data (simplified)\n    amount = contract.base_amount + (contract.usage_units * contract.unit_price);\n  }\n  \n  // Apply taxes\n  const taxRate = contract.tax_rate || 0.08;\n  const taxAmount = amount * taxRate;\n  const totalAmount = amount + taxAmount;\n  \n  invoices.push({\n    contractId: contract.id,\n    customerId: contract.customer_id,\n    customerName: contract.name,\n    customerEmail: contract.email,\n    invoiceNumber: `INV-${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(contract.id).padStart(4, '0')}`,\n    billingPeriodStart: billingStart.toISOString().split('T')[0],\n    billingPeriodEnd: billingEnd.toISOString().split('T')[0],\n    subtotal: amount,\n    taxAmount: taxAmount,\n    totalAmount: totalAmount,\n    currency: contract.currency || 'USD',\n    dueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 30 days\n    status: 'pending',\n    createdAt: new Date().toISOString()\n  });\n}\n\nreturn invoices.map(invoice => ({ json: invoice }));"
+      }
+    },
+    {
+      "name": "Save to Database",
+      "type": "n8n-nodes-base.mysql",
+      "parameters": {
+        "query": "INSERT INTO invoices (contract_id, customer_id, invoice_number, billing_period_start, billing_period_end, subtotal, tax_amount, total_amount, currency, due_date, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        "values": [
+          "={{ $json.contractId }}",
+          "={{ $json.customerId }}",
+          "={{ $json.invoiceNumber }}",
+          "={{ $json.billingPeriodStart }}",
+          "={{ $json.billingPeriodEnd }}",
+          "={{ $json.subtotal }}",
+          "={{ $json.taxAmount }}",
+          "={{ $json.totalAmount }}",
+          "={{ $json.currency }}",
+          "={{ $json.dueDate }}",
+          "{{ $json.status }}",
+          "={{ $json.createdAt }}"
+        ]
+      }
+    },
+    {
+      "name": "Generate PDF Invoice",
+      "type": "n8n-nodes-base.httpRequest",
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.pdf-generator.com/v1/invoices",
+        "body": {
+          "template": "professional_invoice",
+          "data": {
+            "invoice_number": "={{ $json.invoiceNumber }}",
+            "customer_name": "={{ $json.customerName }}",
+            "billing_period": "{{ $json.billingPeriodStart }} - {{ $json.billingPeriodEnd }}",
+            "subtotal": "={{ $json.subtotal }}",
+            "tax": "={{ $json.taxAmount }}",
+            "total": "={{ $json.totalAmount }}",
+            "due_date": "={{ $json.dueDate }}"
+          }
+        }
+      }
+    },
+    {
+      "name": "Send Invoice Email",
+      "type": "n8n-nodes-base.emailSend",
+      "parameters": {
+        "fromEmail": "billing@empresa.com",
+        "toEmail": "={{ $json.customerEmail }}",
+        "subject": "Fatura {{ $json.invoiceNumber }} - {{ $json.customerName }}",
+        "htmlBody": "Segue em anexo sua fatura referente ao período {{ $json.billingPeriodStart }} - {{ $json.billingPeriodEnd }}.",
+        "attachments": "invoice_{{ $json.invoiceNumber }}.pdf"
+      }
+    }
+  ]
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold mb-4">3. HR Automation Suite</h3>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div>
+                            <h4 class="font-semibold mb-3 text-primary">Employee Onboarding</h4>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex items-center">
+                                    <i class="fas fa-user-plus text-green-600 mr-2"></i>
+                                    <span>Criar contas de sistema</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-envelope text-blue-600 mr-2"></i>
+                                    <span>Welcome package</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-calendar text-purple-600 mr-2"></i>
+                                    <span>Agendar treinamentos</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-clipboard-list text-orange-600 mr-2"></i>
+                                    <span>Checklist de tarefas</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold mb-3 text-primary">Leave Management</h4>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex items-center">
+                                    <i class="fas fa-paper-plane text-green-600 mr-2"></i>
+                                    <span>Solicitação de férias</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-check-circle text-blue-600 mr-2"></i>
+                                    <span>Aprovação automática</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-calendar-alt text-purple-600 mr-2"></i>
+                                    <span>Atualizar calendário</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-users text-orange-600 mr-2"></i>
+                                    <span>Notificar equipe</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold mb-3 text-primary">Performance Review</h4>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex items-center">
+                                    <i class="fas fa-clock text-green-600 mr-2"></i>
+                                    <span>Lembrete automático</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-star text-blue-600 mr-2"></i>
+                                    <span>Coleta de feedback</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-chart-bar text-purple-600 mr-2"></i>
+                                    <span>Relatórios automáticos</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-handshake text-orange-600 mr-2"></i>
+                                    <span>Agendar 1:1s</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Produção -->
+            <section id="production" class="section hidden">
+                <h2 class="text-3xl font-bold mb-6 text-primary">
+                    <i class="fas fa-server mr-3"></i>Deploy em Produção
+                </h2>
+
+                <div class="bg-gradient-to-r from-red-500 to-orange-500 text-white rounded-lg p-6 mb-8">
+                    <h3 class="text-xl font-bold mb-2">
+                        <i class="fas fa-exclamation-triangle mr-2"></i>Preparando para Produção
+                    </h3>
+                    <p class="mb-4">Configurações essenciais para um ambiente robusto e seguro</p>
+                    <div class="grid md:grid-cols-4 gap-4">
+                        <div class="bg-white bg-opacity-20 rounded-lg p-3 text-center">
+                            <i class="fas fa-shield-alt text-2xl mb-1"></i>
+                            <div class="text-sm">Segurança</div>
+                        </div>
+                        <div class="bg-white bg-opacity-20 rounded-lg p-3 text-center">
+                            <i class="fas fa-chart-line text-2xl mb-1"></i>
+                            <div class="text-sm">Monitoramento</div>
+                        </div>
+                        <div class="bg-white bg-opacity-20 rounded-lg p-3 text-center">
+                            <i class="fas fa-redo text-2xl mb-1"></i>
+                            <div class="text-sm">Backup</div>
+                        </div>
+                        <div class="bg-white bg-opacity-20 rounded-lg p-3 text-center">
+                            <i class="fas fa-expand-arrows-alt text-2xl mb-1"></i>
+                            <div class="text-sm">Escalabilidade</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg p-6 mb-8">
+                    <h3 class="text-xl font-bold mb-4">1. Docker Compose para Produção</h3>
+                    <pre class="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto"><code class="language-yaml"># docker-compose.production.yml
+version: '3.8'
+
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n_prod
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    environment:
+      # Database
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=postgres
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_DATABASE=n8n_prod
+      - DB_POSTGRESDB_USER=n8n_user
+      - DB_POSTGRESDB_PASSWORD=${POSTGRES_PASSWORD}
+      
+      # Redis Cache
+      - QUEUE_BULL_REDIS_HOST=redis
+      - QUEUE_BULL_REDIS_PORT=6379
+      - QUEUE_BULL_REDIS_PASSWORD=${REDIS_PASSWORD}
+      
+      # Security
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=${N8N_ADMIN_USER}
+      - N8N_BASIC_AUTH_PASSWORD=${N8N_ADMIN_PASSWORD}
+      - N8N_ENCRYPTION_KEY=${N8N_ENCRYPTION_KEY}
+      
+      # Performance
+      - EXECUTIONS_PROCESS=main
+      - EXECUTIONS_TIMEOUT=3600
+      - EXECUTIONS_TIMEOUT_MAX=7200
+      - N8N_METRICS=true
+      
+      # Logs
+      - N8N_LOG_LEVEL=info
+      - N8N_LOG_OUTPUT=console,file
+      - N8N_LOG_FILE_LOCATION=/home/node/n8n-logs/
+      
+      # URLs
+      - N8N_HOST=${N8N_DOMAIN}
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=https
+      - WEBHOOK_URL=https://${N8N_DOMAIN}/
+      
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - n8n_logs:/home/node/n8n-logs
+      - /etc/localtime:/etc/localtime:ro
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - n8n_network
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: n8n_postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=n8n_prod
+      - POSTGRES_USER=n8n_user
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_INITDB_ARGS=--encoding=UTF-8 --lc-collate=C --lc-ctype=C
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backups:/backups
+    networks:
+      - n8n_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U n8n_user -d n8n_prod"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  redis:
+    image: redis:7-alpine
+    container_name: n8n_redis
+    restart: unless-stopped
+    command: redis-server --requirepass ${REDIS_PASSWORD} --maxmemory 256mb --maxmemory-policy allkeys-lru
+    volumes:
+      - redis_data:/data
+    networks:
+      - n8n_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  nginx:
+    image: nginx:alpine
+    container_name: n8n_nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+      - nginx_logs:/var/log/nginx
+    depends_on:
+      - n8n
+    networks:
+      - n8n_network
+
+  # Monitoring
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: n8n_prometheus
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=30d'
+      - '--web.enable-lifecycle'
+    networks:
+      - n8n_network
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: n8n_grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_USER}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
+      - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./grafana/datasources:/etc/grafana/provisioning/datasources
+    networks:
+      - n8n_network
+
+  # Backup automation
+  backup:
+    image: postgres:15-alpine
+    container_name: n8n_backup
+    restart: "no"
+    environment:
+      - PGPASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - ./backups:/backups
+      - ./backup-scripts:/scripts:ro
+    command: /scripts/backup.sh
+    networks:
+      - n8n_network
+    profiles:
+      - backup
+
+volumes:
+  n8n_data:
+  n8n_logs:
+  postgres_data:
+  redis_data:
+  prometheus_data:
+  grafana_data:
+  nginx_logs:
+
+networks:
+  n8n_network:
+    driver: bridge
+</code></pre>
+                </div>
+
+                <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg p-6 mb-8">
+                    <h3 class="text-xl font-bold mb-4">2. Nginx Configuration</h3>
+                    <pre class="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto"><code class="language-nginx"># nginx.conf
+events {
+    worker_connections 1024;
+}
+
+http {
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+    
+    # Logging
+    log_format main '$remote_addr - $remote_user [$time_local] "$request" '
+                    '$status $body_bytes_sent "$http_referer" '
+                    '"$http_user_agent" "$http_x_forwarded_for"';
+    
+    access_log /var/log/nginx/access.log main;
+    error_log /var/log/nginx/error.log warn;
+    
+    # Gzip compression
+    gzip on;
+    gzip_vary on;
+    gzip_min_length 1024;
+    gzip_types text/plain text/css text/xml text/javascript 
+               application/javascript application/xml+rss 
+               application/json application/xml;
+    
+    # Rate limiting
+    limit_req_zone $binary_remote_addr zone=api:10m rate=10r/s;
+    limit_req_zone $binary_remote_addr zone=webhook:10m rate=50r/s;
+    
+    # Security headers
+    add_header X-Frame-Options DENY always;
+    add_header X-Content-Type-Options nosniff always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' wss: https:;" always;
+    
+    # Upstream
+    upstream n8n_backend {
+        server n8n:5678;
+        keepalive 32;
+    }
+    
+    # HTTP redirect to HTTPS
+    server {
+        listen 80;
+        server_name _;
+        location / {
+            return 301 https://$host$request_uri;
+        }
+    }
+    
+    # HTTPS server
+    server {
+        listen 443 ssl http2;
+        server_name your-domain.com;
+        
+        # SSL configuration
+        ssl_certificate /etc/nginx/ssl/cert.pem;
+        ssl_certificate_key /etc/nginx/ssl/key.pem;
+        ssl_protocols TLSv1.2 TLSv1.3;
+        ssl_ciphers ECDHE-RSA-AES256-GCM-SHA512:DHE-RSA-AES256-GCM-SHA512:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-GCM-SHA384;
+        ssl_prefer_server_ciphers off;
+        ssl_session_cache shared:SSL:10m;
+        ssl_session_timeout 10m;
+        
+        # Security
+        client_max_body_size 50M;
+        client_body_timeout 60s;
+        client_header_timeout 60s;
+        
+        # Main application
+        location / {
+            limit_req zone=api burst=20 nodelay;
+            
+            proxy_pass http://n8n_backend;
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection 'upgrade';
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_cache_bypass $http_upgrade;
+            proxy_connect_timeout 30s;
+            proxy_send_timeout 30s;
+            proxy_read_timeout 30s;
+        }
+        
+        # Webhooks (higher rate limit)
+        location /webhook/ {
+            limit_req zone=webhook burst=100 nodelay;
+            
+            proxy_pass http://n8n_backend;
+            proxy_http_version 1.1;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_connect_timeout 60s;
+            proxy_send_timeout 300s;
+            proxy_read_timeout 300s;
+        }
+        
+        # Health check endpoint
+        location /health {
+            access_log off;
+            proxy_pass http://n8n_backend/healthz;
+            proxy_set_header Host $host;
+        }
+        
+        # Block unwanted requests
+        location ~ /\. {
+            deny all;
+            access_log off;
+            log_not_found off;
+        }
+    }
+}</code></pre>
+                </div>
+
+                <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg p-6 mb-8">
+                    <h3 class="text-xl font-bold mb-4">3. Monitoring & Alerting</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold mb-3">Prometheus Configuration</h4>
+                            <pre class="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto text-sm"><code class="language-yaml"># prometheus.yml
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  - "n8n_rules.yml"
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          - alertmanager:9093
+
+scrape_configs:
+  - job_name: 'n8n'
+    static_configs:
+      - targets: ['n8n:5678']
+    metrics_path: '/metrics'
+    scrape_interval: 30s
+    scrape_timeout: 10s
+
+  - job_name: 'postgres'
+    static_configs:
+      - targets: ['postgres:5432']
+    
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis:6379']
+    
+  - job_name: 'nginx'
+    static_configs:
+      - targets: ['nginx:80']
+    metrics_path: '/metrics'</code></pre>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold mb-3">Alert Rules</h4>
+                            <pre class="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto text-sm"><code class="language-yaml"># n8n_rules.yml
+groups:
+  - name: n8n_alerts
+    rules:
+    - alert: N8NHighErrorRate
+      expr: rate(n8n_workflow_executions_failed_total[5m]) > 0.1
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: "High workflow failure rate"
+        description: "N8N workflow failure rate is {{ $value }}% over the last 5 minutes"
+
+    - alert: N8NHighMemoryUsage
+      expr: process_resident_memory_bytes / 1024 / 1024 > 1000
+      for: 10m
+      labels:
+        severity: warning
+      annotations:
+        summary: "N8N high memory usage"
+        description: "N8N is using {{ $value }}MB of memory"
+
+    - alert: PostgresDown
+      expr: up{job="postgres"} == 0
+      for: 1m
+      labels:
+        severity: critical
+      annotations:
+        summary: "PostgreSQL is down"
+        description: "PostgreSQL database is not responding"
+
+    - alert: RedisDown
+      expr: up{job="redis"} == 0
+      for: 1m
+      labels:
+        severity: warning
+      annotations:
+        summary: "Redis is down"
+        description: "Redis cache is not responding"</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg p-6 mb-8">
+                    <h3 class="text-xl font-bold mb-4">4. Backup & Recovery Scripts</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold mb-3">Automated Backup Script</h4>
+                            <pre class="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto text-sm"><code class="language-bash">#!/bin/bash
+# backup.sh - Automated backup script
+
+set -e
+
+# Configuration
+BACKUP_DIR="/backups"
+DATE=$(date +%Y%m%d_%H%M%S)
+RETENTION_DAYS=30
+
+# Database backup
+echo "Starting PostgreSQL backup..."
+pg_dump -h postgres -U n8n_user -d n8n_prod > "${BACKUP_DIR}/n8n_db_${DATE}.sql"
+
+# Compress database backup
+gzip "${BACKUP_DIR}/n8n_db_${DATE}.sql"
+
+# N8N data backup
+echo "Backing up n8n data..."
+tar -czf "${BACKUP_DIR}/n8n_data_${DATE}.tar.gz" -C /home/node/.n8n .
+
+# Workflow export
+echo "Exporting workflows..."
+curl -u "${N8N_ADMIN_USER}:${N8N_ADMIN_PASSWORD}" \
+     "http://n8n:5678/api/v1/workflows" \
+     > "${BACKUP_DIR}/workflows_${DATE}.json"
+
+# Upload to cloud storage (example with AWS S3)
+if [ "${AWS_S3_BUCKET}" ]; then
+    echo "Uploading to S3..."
+    aws s3 cp "${BACKUP_DIR}/n8n_db_${DATE}.sql.gz" \
+        "s3://${AWS_S3_BUCKET}/backups/database/"
+    aws s3 cp "${BACKUP_DIR}/n8n_data_${DATE}.tar.gz" \
+        "s3://${AWS_S3_BUCKET}/backups/data/"
+    aws s3 cp "${BACKUP_DIR}/workflows_${DATE}.json" \
+        "s3://${AWS_S3_BUCKET}/backups/workflows/"
+fi
+
+# Clean old backups
+echo "Cleaning old backups..."
+find "${BACKUP_DIR}" -name "n8n_db_*.sql.gz" -mtime +${RETENTION_DAYS} -delete
+find "${BACKUP_DIR}" -name "n8n_data_*.tar.gz" -mtime +${RETENTION_DAYS} -delete
+find "${BACKUP_DIR}" -name "workflows_*.json" -mtime +${RETENTION_DAYS} -delete
+
+echo "Backup completed successfully!"
+
+# Send notification
+curl -X POST \
+     -H 'Content-type: application/json' \
+     --data "{\"text\":\"✅ N8N backup completed successfully - ${DATE}\"}" \
+     "${SLACK_WEBHOOK_URL}"</code></pre>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold mb-3">Recovery Script</h4>
+                            <pre class="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto text-sm"><code class="language-bash">#!/bin/bash
+# restore.sh - Recovery script
+
+set -e
+
+if [ $# -eq 0 ]; then
+    echo "Usage: $0 <backup_date>"
+    echo "Example: $0 20240115_143022"
+    exit 1
+fi
+
+BACKUP_DATE=$1
+BACKUP_DIR="/backups"
+
+echo "Starting recovery for backup: ${BACKUP_DATE}"
+
+# Stop n8n service
+echo "Stopping n8n service..."
+docker-compose stop n8n
+
+# Restore database
+echo "Restoring database..."
+if [ -f "${BACKUP_DIR}/n8n_db_${BACKUP_DATE}.sql.gz" ]; then
+    # Drop existing database
+    docker-compose exec postgres psql -U n8n_user -c "DROP DATABASE IF EXISTS n8n_prod;"
+    docker-compose exec postgres psql -U n8n_user -c "CREATE DATABASE n8n_prod;"
+    
+    # Restore from backup
+    gunzip -c "${BACKUP_DIR}/n8n_db_${BACKUP_DATE}.sql.gz" | \
+        docker-compose exec -T postgres psql -U n8n_user -d n8n_prod
+    
+    echo "Database restored successfully"
+else
+    echo "Database backup file not found!"
+    exit 1
+fi
+
+# Restore n8n data
+echo "Restoring n8n data..."
+if [ -f "${BACKUP_DIR}/n8n_data_${BACKUP_DATE}.tar.gz" ]; then
+    # Backup current data
+    docker run --rm -v n8n_data:/data -v $(pwd):/backup \
+        alpine tar czf /backup/n8n_data_current_backup.tar.gz -C /data .
+    
+    # Clear current data
+    docker run --rm -v n8n_data:/data alpine rm -rf /data/*
+    
+    # Restore from backup
+    docker run --rm -v n8n_data:/data -v "${BACKUP_DIR}":/backup \
+        alpine tar xzf "/backup/n8n_data_${BACKUP_DATE}.tar.gz" -C /data
+    
+    echo "N8N data restored successfully"
+else
+    echo "N8N data backup file not found!"
+    exit 1
+fi
+
+# Start services
+echo "Starting services..."
+docker-compose up -d
+
+# Wait for services to be ready
+echo "Waiting for services to start..."
+sleep 30
+
+# Verify restoration
+echo "Verifying restoration..."
+RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:5678/healthz)
+if [ "$RESPONSE" = "200" ]; then
+    echo "✅ Recovery completed successfully!"
+    
+    # Send notification
+    curl -X POST \
+         -H 'Content-type: application/json' \
+         --data "{\"text\":\"✅ N8N recovery completed successfully - ${BACKUP_DATE}\"}" \
+         "${SLACK_WEBHOOK_URL}"
+else
+    echo "❌ Recovery verification failed!"
+    exit 1
+fi</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold mb-4">5. Environment Variables Template</h3>
+                    <pre class="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto"><code class="language-bash"># .env - Production environment variables
+
+# Domain and URLs
+N8N_DOMAIN=n8n.yourcompany.com
+WEBHOOK_URL=https://n8n.yourcompany.com/
+
+# Database
+POSTGRES_PASSWORD=your_very_secure_postgres_password
+DB_POSTGRESDB_PASSWORD=your_very_secure_postgres_password
+
+# Redis
+REDIS_PASSWORD=your_very_secure_redis_password
+
+# N8N Authentication
+N8N_ADMIN_USER=admin
+N8N_ADMIN_PASSWORD=your_very_secure_n8n_password
+N8N_ENCRYPTION_KEY=your_64_character_encryption_key_here_must_be_exactly_64_chars
+
+# Monitoring
+GRAFANA_USER=admin
+GRAFANA_PASSWORD=your_grafana_password
+
+# Backup & Cloud Storage
+AWS_ACCESS_KEY_ID=your_aws_access_key
+AWS_SECRET_ACCESS_KEY=your_aws_secret_key
+AWS_DEFAULT_REGION=us-east-1
+AWS_S3_BUCKET=your-n8n-backups-bucket
+
+# Notifications
+SLACK_WEBHOOK_URL=https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK
+
+# SSL (if using Let's Encrypt)
+LETSENCRYPT_EMAIL=admin@yourcompany.com
+
+# Security
+FAIL2BAN_ENABLED=true
+CLOUDFLARE_API_TOKEN=your_cloudflare_token
+
+# Performance tuning
+N8N_EXECUTIONS_DATA_PRUNE=true
+N8N_EXECUTIONS_DATA_MAX_AGE=168  # 7 days in hours
+N8N_EXECUTIONS_DATA_PRUNE_MAX_COUNT=10000</code></pre>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-gray-100 dark:bg-dark-card border-t border-gray-200 dark:border-gray-700 py-8">
+            <div class="container mx-auto px-4 text-center">
+                <p class="text-gray-600 dark:text-gray-400">
+                    <i class="fas fa-magic mr-2"></i>
+                    Apostila completa de n8n - Automação sem limites
+                </p>
+                <p class="text-sm text-gray-500 dark:text-gray-500 mt-2">
+                    Workflows • Integrações • APIs • Produção • Monitoramento
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Dark mode detection
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+
+        // Navigation
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.remove('hidden');
+            
+            // Update navigation buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.className = 'nav-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600';
+            });
+            
+            event.target.className = 'nav-btn px-4 py-2 rounded-lg bg-primary text-white';
+        }
+
+        // Workflow simulator
+        function runWorkflowDemo() {
+            const simulator = document.getElementById('workflow-simulator');
+            simulator.innerHTML = `
+                <div class="flex items-center justify-center space-x-8">
+                    <div class="workflow-node bg-green-500 text-white p-4 rounded-lg animate-pulse">
+                        <i class="fas fa-clock"></i>
+                        <div class="text-sm mt-1">Trigger</div>
+                    </div>
+                    <i class="fas fa-arrow-right text-gray-400 text-2xl"></i>
+                    <div class="workflow-node bg-blue-500 text-white p-4 rounded-lg">
+                        <i class="fas fa-cogs"></i>
+                        <div class="text-sm mt-1">Process</div>
+                    </div>
+                    <i class="fas fa-arrow-right text-gray-400 text-2xl"></i>
+                    <div class="workflow-node bg-purple-500 text-white p-4 rounded-lg">
+                        <i class="fas fa-paper-plane"></i>
+                        <div class="text-sm mt-1">Action</div>
+                    </div>
+                </div>
+                <div class="mt-4 text-center">
+                    <div class="bg-green-100 dark:bg-green-900 border border-green-400 text-green-700 dark:text-green-200 px-4 py-2 rounded">
+                        ✅ Workflow executado com sucesso!
+                    </div>
+                </div>
+            `;
+            
+            // Animate nodes
+            setTimeout(() => {
+                const nodes = document.querySelectorAll('.workflow-node');
+                nodes.forEach((node, index) => {
+                    setTimeout(() => {
+                        node.classList.add('animate-pulse');
+                        setTimeout(() => {
+                            node.classList.remove('animate-pulse');
+                            node.classList.add('bg-green-600');
+                        }, 1000);
+                    }, index * 1000);
+                });
+            }, 500);
+        }
+
+        function resetWorkflowDemo() {
+            const simulator = document.getElementById('workflow-simulator');
+            simulator.innerHTML = `
+                <div class="flex items-center justify-center space-x-8">
+                    <div class="bg-gray-300 dark:bg-gray-600 p-4 rounded-lg">
+                        <i class="fas fa-clock text-gray-600 dark:text-gray-300"></i>
+                        <div class="text-sm mt-1 text-gray-600 dark:text-gray-300">Trigger</div>
+                    </div>
+                    <i class="fas fa-arrow-right text-gray-400 text-2xl"></i>
+                    <div class="bg-gray-300 dark:bg-gray-600 p-4 rounded-lg">
+                        <i class="fas fa-cogs text-gray-600 dark:text-gray-300"></i>
+                        <div class="text-sm mt-1 text-gray-600 dark:text-gray-300">Process</div>
+                    </div>
+                    <i class="fas fa-arrow-right text-gray-400 text-2xl"></i>
+                    <div class="bg-gray-300 dark:bg-gray-600 p-4 rounded-lg">
+                        <i class="fas fa-paper-plane text-gray-600 dark:text-gray-300"></i>
+                        <div class="text-sm mt-1 text-gray-600 dark:text-gray-300">Action</div>
+                    </div>
+                </div>
+                <div class="mt-4 text-center text-gray-500">
+                    Clique em "Executar Demo" para ver o workflow em ação
+                </div>
+            `;
+        }
+
+        // Form simulation
+        function simulateFormSubmission() {
+            const name = document.getElementById('demo-name').value;
+            const email = document.getElementById('demo-email').value;
+            const message = document.getElementById('demo-message').value;
+            
+            const log = document.getElementById('workflow-log');
+            log.innerHTML = '';
+            
+            const steps = [
+                { step: 'Webhook Received', icon: 'fas fa-globe', color: 'text-green-600', data: { name, email, message } },
+                { step: 'Validating Data', icon: 'fas fa-check-circle', color: 'text-blue-600', data: 'All fields valid' },
+                { step: 'Saving to Database', icon: 'fas fa-database', color: 'text-purple-600', data: 'Record ID: 12345' },
+                { step: 'Sending Email', icon: 'fas fa-envelope', color: 'text-orange-600', data: `Email sent to ${email}` },
+                { step: 'Workflow Complete', icon: 'fas fa-check', color: 'text-green-600', data: 'Success!' }
+            ];
+            
+            steps.forEach((step, index) => {
+                setTimeout(() => {
+                    const logEntry = document.createElement('div');
+                    logEntry.className = 'mb-2 text-xs';
+                    logEntry.innerHTML = `
+                        <div class="flex items-center">
+                            <i class="${step.icon} ${step.color} mr-2"></i>
+                            <span class="font-semibold">${step.step}</span>
+                        </div>
+                        <div class="ml-6 text-gray-600 dark:text-gray-400">${typeof step.data === 'object' ? JSON.stringify(step.data) : step.data}</div>
+                    `;
+                    log.appendChild(logEntry);
+                    log.scrollTop = log.scrollHeight;
+                }, index * 800);
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            resetWorkflowDemo();
+        });
+    </script>
+</body>
+</html>
